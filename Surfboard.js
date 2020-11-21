@@ -13,16 +13,31 @@ function Surfboard() {
         return element;
     }
 
+    function _make_toggle(active, unactive) {
+        let state = false;
+        return () => {
+            state = !state;
+            if (state)
+                active();
+            else
+                unactive();
+        }
+    }
+
 
     // DOM manipulation functions
+
     function expand(keys, element, options) {
         /* Expands element
          *
          * Options:
+         *      animation: Time to expand; default 1 second.
+         *          Set to false to turn off.
          *      expandX: Multipler to width; default 2
          *      expandY: Multipler to height; default 2
-         *      animation: Time to expand; default 1 second.
-         *                 Set to false to turn off.
+         *      toggle: If set to true, expanding/shrinking
+         *          is only triggered by specified key event
+         *          (and not the absence of the event).
          *
         */
         element = _get_element(element);
@@ -52,12 +67,68 @@ function Surfboard() {
             element.style.width = `${width}px`;      
         }
 
-        _manager.addEvent(keys, active, unactive);
+        if ('toggle' in options && options.toggle) {
+            keys.map((key) => key.hold = false);
+            _manager.addEvent(keys, _make_toggle(active, unactive));
+        }
+        else
+            _manager.addEvent(keys, active, unactive);
+    }
+
+
+    function pop(keys, element, options) {
+        /* Removes element
+         *
+         * Options:
+         *      collapse: Remove the space occupied by the element;
+         *          false by default.
+         *      delay: Time to remove element; default 0 seconds.
+         *      toggle: If set to true, event is only triggered by 
+         *          specified key event (and not the absence of the event).
+         *          
+        */
+
+       element = _get_element(element);
+
+       let delay = 0, timeout, _default;
+
+       if ('delay' in options) {
+           delay = options.delay;
+       }
+
+       element.style.transition = `opacity ${delay}s ease-in-out`;
+
+       function active() {
+            element.style.opacity = 0;
+            if (options.collapse) {
+                _default = element.style.display;
+                element.style.display = 'none';
+            } else {
+                _default = element.style.visibility;
+                timeout = setTimeout(() => element.style.visibility = 'hidden', delay*1000);
+            }
+       }
+
+       function inactive() {
+           clearTimeout(timeout);
+            element.style.opacity = 1;
+            if (options.collapse)
+                element.style.display = _default;
+            else
+                element.style.visibility = _default;
+       }
+
+       if ('toggle' in options && options.toggle) {
+           keys.map((key) => key.hold = false);
+           _manager.addEvent(keys, _make_toggle(active, inactive));
+       } else
+           _manager.addEvent(keys, active);
     }
 
 
 
     return {
-        expand: expand
+        expand: expand,
+        pop: pop
     }
 }

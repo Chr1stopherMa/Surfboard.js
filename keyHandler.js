@@ -13,7 +13,6 @@ function KeyEventManager() {
 
     document.addEventListener(KEYDOWN, event => {
         keyTracker[event.code] = event.repeat;
-        console.log(keyTracker)
     })
     
     document.addEventListener(KEYUP, event => {
@@ -46,7 +45,7 @@ function KeyEventManager() {
             return (event) => {
                 let trigger = true;
                 for (let key of this.keys) {
-                    if (!(key.key in keyTracker && key.hold === keyTracker[key.key])) {
+                    if (!(key.key in keyTracker && (!('hold' in key) || key.hold === keyTracker[key.key]))) {
                         trigger = false;
                     }
                 }
@@ -74,12 +73,10 @@ function KeyEventManager() {
     }
 
     function _make_callback(cb1, cb2) {
-        if (cb2 === null) {
-            return cb1;
-        }
-        return (state) => {
+        if (cb2 === undefined)
+            cb2 = () => {}
+        return (state) =>
             state ? cb1() : cb2();
-        }
     }
 
     function addEvent(keys, active_callback, inactive_callback) {
