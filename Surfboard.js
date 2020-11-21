@@ -28,7 +28,7 @@ function Surfboard() {
     // DOM manipulation functions
 
     function expand(keys, element, options) {
-        /* Expands element
+        /* Expands element by a specified factor.
          *
          * Options:
          *      animation: Time to expand; default 1 second.
@@ -38,7 +38,6 @@ function Surfboard() {
          *      toggle: If set to true, expanding/shrinking
          *          is only triggered by specified key event
          *          (and not the absence of the event).
-         *
         */
         element = _get_element(element);
         const domRect = element.getBoundingClientRect();
@@ -77,15 +76,15 @@ function Surfboard() {
 
 
     function pop(keys, element, options) {
-        /* Removes element
+        /* Removes element from the document. Any event listeners
+         * will be disabled while the element is not present.
          *
          * Options:
          *      collapse: Remove the space occupied by the element;
          *          false by default.
          *      delay: Time to remove element; default 0 seconds.
          *      toggle: If set to true, event is only triggered by 
-         *          specified key event (and not the absence of the event).
-         *          
+         *          specified key event (and not the absence of the event).   
         */
 
        element = _get_element(element);
@@ -126,9 +125,57 @@ function Surfboard() {
     }
 
 
+    function scroll(keys, options) {
+        /* Moves the screen to a specified location.
+         *
+         * Options:
+         *      horizontal: The amount of horizontal scroll; default is 0.
+         *          If this value is an integer, it represents the number
+         *          of pixels. If this value is a float, it represents the
+         *          percentage of the viewport.
+         *      relative: If true, viewport is scrolled relative to the 
+         *          current position. Otherwise, the viewport is scrolled
+         *          to the absolute position.
+         *      smooth: If true, sets scroll-behavior of <html> tag to smooth.
+         *          WARNING: this may have unintentional side-effects.
+         *      vertical: The amount of vertical scroll; default is 0.
+         *          If this value is an integer, it represents the number
+         *          of pixels. If this value is a float, it represents the
+         *          percentage of the viewport.  
+        */
+
+        if (options.smooth)
+            document.documentElement.style.scrollBehavior = 'smooth';
+
+        let x_scroll, y_scroll;
+        options.horizontal = options.horizontal ? options.horizontal : 0;
+        options.vertical = options.vertical ? options.vertical : 0;
+
+        if (Number.isInteger(options.horizontal))
+            x_scroll = function() {return options.horizontal};
+        else
+            x_scroll = function() {return options.horizontal * window.innerWidth};
+        
+        if (Number.isInteger(options.vertical))
+            y_scroll = function() {return options.vertical}
+        else
+            y_scroll = function() {return options.vertical * window.innerHeight};
+
+        function active() {
+            if (options.relative)
+                scrollBy(x_scroll(), y_scroll());
+            else
+                scrollTo(x_scroll(), y_scroll());
+        }
+
+        _manager.addEvent(keys, active);
+    }
+
+
 
     return {
         expand: expand,
-        pop: pop
+        pop: pop,
+        scroll: scroll
     }
 }
