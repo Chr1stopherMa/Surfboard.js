@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Surfboard</title>
+        <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/proxy/RNrqueRSmtL4Dd3iovUaS9PhXHT_vpMwiKsYxBFQo-ZIrJuIBPlc85Ju1AQF-F11fQxWFkEEP-mbfNq1hTT--o_fWZWVt1AK5fgsQLyNDE7t"/>
+        <link rel="stylesheet" href="examples.css">
+    </head>
+
+    <body>
+        <h1>Surfboard.js</h1>
+        <span id="quote">"Surf the web using your keyboard"</span>
+
+        <div id="main-flex-container">
+            <div class="heading">Basic Functions</div>
+            <div class="sub-heading">Pop Elements</div>
+            <div class="flex-block">
+                <div class="element-container">
+                    <div id="pop-1" class="pop pop-1">Pop this element (press "Q")</div>
+                    <div id="pop-2" class="pop pop-2">Pop with a transition (press "E")</div>
+                    <div id="pop-3" class="pop pop-1">Pop and collaspe space (press "T")</div>
+                    <div id="pop-4" class="pop pop-2">Toggle between Pop and Unpop (press "Y" multiple times)</div>
+                    <div id="pop-5" class="pop pop-1">Combine multiple options (press "U" multiple times)</div>
+                </div>
+<pre class="code">surf.pop('Q', "#pop-1")
+surf.pop('E', "#pop-2", {delay: 1})
+surf.pop('T', "#pop-3", {collapse: true})
+surf.pop('Y', "#pop-4", {toggle: true})
+surf.pop('U', '#pop-5', {toggle: true, delay: 0.5})</pre>
+            </div>
+
+
+            <div class="sub-heading">Slide Elements</div>
+            <div class="flex-block">
+                <div class="element-container">
+                    <div id="slide-1" class="pop pop-1">Hold "Z" to slide this to the left</div>
+                </div>
+<pre class="code">surf.pop('Q', "#pop-1")
+surf.pop('E', "#pop-2", {delay: 1})
+surf.pop('T', "#pop-3", {collapse: true})
+surf.pop('Y', "#pop-4", {toggle: true})
+surf.pop('U', '#pop-5', {toggle: true, delay: 0.5})</pre>
+            </div>
+
+
+            <div class="sub-heading">Expand Elements</div>
+            <div class="flex-block">
+                <div class="image-container element-container">
+                    <div class="inline-text">Hold "A" to expand image to double its size</div>
+                    <img id="img-1" src="https://cdn.pixabay.com/photo/2016/03/09/15/16/wave-1246560_1280.jpg">
+                    <div class="inline-text">Hold "D" to expand horizontally (with no delay)</div>
+                    <img id="img-2" src="https://cdn.pixabay.com/photo/2016/03/09/15/16/wave-1246560_1280.jpg">
+                    <div class="inline-text">Hold "F" to expand unequally in both dimensions</div>
+                    <img id="img-3" src="https://cdn.pixabay.com/photo/2016/03/09/15/16/wave-1246560_1280.jpg">
+                    <div class="inline-text">Toggle instead of hold (press "G" multiple times)</div>
+                    <img id="img-4" src="https://cdn.pixabay.com/photo/2016/03/09/15/16/wave-1246560_1280.jpg">
+                    <div class="inline-text">Hold "H" to shrink the image</div>
+                    <img id="img-5" src="https://cdn.pixabay.com/photo/2016/03/09/15/16/wave-1246560_1280.jpg">
+                </div>
+<pre class="code">surf.expand('A', '#img-1', {expand: 2})
+surf.expand('D', '#img-2', {expandX: 2, delay: 0})
+surf.expand('F', '#img-3', {expandX: 1.5, expandY: 3})
+surf.expand('G', '#img-4', {expand: 2, toggle: true})
+surf.expand('H', '#img-5', {expand: 0.5, delay: 0.5})
+</pre>
+            </div>
+
+
+            <div class="sub-heading">Scroll Events</div>
+            <div class="flex-block">
+                <div class="element-container">
+                    <div class="pop pop-1">Hold "W" to scroll up the page</div>
+                    <div class="pop pop-2">Hold "S" to scroll down the page</div>
+                    <div class="pop pop-1">Try comparing the result to using the arrow keys!</div>
+                    <div class="pop pop-2">Press "J" to instantly go to the top of the page</div>
+                </div>
+<pre class="code">surf.scroll('W', {vertical: -0.08, relative: true,
+    smooth: true})
+surf.scroll('S', {vertical: 0.08, relative: true,
+    smooth: true})
+surf.scroll('J', {vertical: 0})
+</pre>
+            </div>
+
+        </div>
+    </body>
+
+    <script src="keyHandler.js"></script>
+    <script src="Surfboard.js"></script>
+    <script src="examples.js"></script>
+</html>
