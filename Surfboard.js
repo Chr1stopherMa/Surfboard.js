@@ -5,6 +5,7 @@
 
 function Surfboard() {
     const _manager = KeyEventManager();
+    const _animator = Animator();
 
     function _get_element(element) {
         if (typeof element === 'string' && element.startsWith('#')) {
@@ -72,8 +73,7 @@ function Surfboard() {
 
         const expandX = "expandX" in options ? options.expandX : options.expand;
         const expandY = "expandY" in options ? options.expandY : options.expand;
-
-
+        
         function active() {
             element.style.height = `${expandY * height}px`;
             element.style.width = `${expandX * width}px`;
@@ -81,7 +81,7 @@ function Surfboard() {
 
         function unactive() {
             element.style.height = `${height}px`;
-            element.style.width = `${width}px`;  
+            element.style.width = `${width}px`;
         }
 
         if ('toggle' in options && options.toggle) {
@@ -162,29 +162,24 @@ function Surfboard() {
 
         options = options ? options : {};
         element = _get_element(element);
-        const domRect = () => {return element.getBoundingClientRect()};
 
-        element.style.width = `${domRect().width}px`;
-
-        if (options.duration)
-            element.style.transition += `width ${options.duration}s`;
-        else
-            element.style.transition += `width 1s`;
-
-        const original = element.style.width;
-        element.style.overflow = 'hidden';
-        element.style.position = 'absolute';
-        element.style.animation = '2s slide-right 2s forwards';
+        const handler = _animator.slide(element, options);
         
+        let run = false;
         function active() {
-            element.style.width = '0px';
+            if (!run || options.toggle)
+                handler(true);
+            run = true;
         }
 
         function inactive() {
-            element.style.width = original;
+            handler(false);
         }
 
-        _manager.addEvent(keys, active, inactive);
+        if (options.toggle)
+            _manager.addEvent(keys, _make_toggle(active, inactive));
+        else
+            _manager.addEvent(keys, active, inactive);
     }
 
 
@@ -253,8 +248,6 @@ function Surfboard() {
         else
            _manager.addEvent(keys, callback, callback2);
     }
-
-
 
     return {
         expand: expand,
