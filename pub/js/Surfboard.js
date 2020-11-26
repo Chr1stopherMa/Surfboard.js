@@ -218,18 +218,7 @@ function Surfboard() {
         /* Slides the element.
          *
          * Options:
-         *      horizontal: The amount of horizontal scroll; default is 0.
-         *          If this value is an integer, it represents the number
-         *          of pixels. If this value is a float, it represents the
-         *          percentage of the viewport.
-         *      relative: If true, viewport is scrolled relative to the 
-         *          current position. Otherwise, the viewport is scrolled
-         *          to the absolute position.
-         *      smooth: If true, sets scroll-behavior of <html> tag to smooth.
-         *      vertical: The amount of vertical scroll; default is 0.
-         *          If this value is an integer, it represents the number
-         *          of pixels. If this value is a float, it represents the
-         *          percentage of the viewport.  
+         * TODO: list options
         */
 
         options = options ? options : {};
@@ -317,6 +306,8 @@ function Surfboard() {
                  options.relative ? scrollBy(settings) : scrollTo(settings);
             }
         }
+        if (options.hold)
+            keys = `hold+${keys}` // TODO: clean up
 
         return _manager.addEvent(keys, active);
     }

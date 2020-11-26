@@ -13,6 +13,10 @@
             <h3>Press "N" to close this</h3>
         </div>
 
+        <div id="notif">
+            Annoying pop-up! (press "X" to remove)
+        </div>
+
         <h1>Surfboard.js</h1>
         <span id="quote">"Surf the web using your keyboard"</span>
 
@@ -105,15 +109,15 @@ surf.expand('H', '#img-5', {expand: 0.5, delay: 0.5})
                     <div class="pop pop-2">Hold "S" to scroll down the page</div>
                     <div class="pop pop-1">Try comparing the result to using the arrow keys!</div>
                     <div class="pop pop-2">Press "J" to instantly go to the top of the page</div>
-                    <div class="pop pop-1">Press "M" multiple times to cycle through all the sub-headings</div>
+                    <div class="pop pop-1">Press "M" multiple times to cycle through all the headings</div>
                 </div>
 <pre class="code">surf.scroll('W', {vertical: -0.08, relative: true,
     smooth: true})
 surf.scroll('S', {vertical: 0.08, relative: true,
     smooth: true})
 surf.scroll('J', {vertical: 0})
-surf.scroll('M', {target: '.sub-heading',
-    offsetY: -20, smooth: true})
+surf.scroll('M', {target: '.heading',
+    offsetY: -30, smooth: true})
 </pre>
             </div>
 
@@ -140,20 +144,36 @@ surf.custom('R', callback)
         </div>
 
 
+        <div class="sub-heading">Remove Pop-Up Notifications</div>
+        <div class="flex-block">
+            <div class="element-container">
+                <div class="pop pop-1">Press "." to simulate a pop-up notification</div>
+                <div class="pop pop-2">Press "X" to remove the pop-up</div>
+            </div>
+<pre class="code">let notifcation = document.getElementById("notif")
+function notify() {
+    notifcation.removeAttribute("style");
+    notifcation.style.visibility = 'initial';
+}
+surf.pop('X', '#notif')
+surf.custom('.', notify)</pre>
+    </div>
+
+
         <div class="sub-heading">Multiple Choice Question</div>
         <div class="flex-block">
             <div class="element-container">
                 <div class="pop pop-1">
                     Approximately how many surfboards are manufactured per year?
                 </div>
-                <div class="pop pop-2">(Press "B" to cycle through the options and "Enter" to confirm)</div>
+                <div class="pop pop-2">(Use the Right Arrow key to cycle through the options and press "Enter" to confirm)</div>
                 <div class="pop pop-1 choice">a) 70,000</div>
                 <div class="pop pop-2 choice">b) 100,000</div>
                 <div class="pop pop-1 choice">c) 400,000</div>
                 <div class="pop pop-2 choice">d) 700,000</div>
                 <div id="answer" class="pop pop-1">...</div>
             </div>
-<pre class="code">const handler = surf.highlight('B', '.choice')
+<pre class="code">const handler = surf.highlight('Right', '.choice')
 function cb() {
     let selected = handler.selected()
     let answer = element.getElementById('answer')
@@ -176,12 +196,28 @@ surf.custom('Enter', cb);</pre>
                     <div class="pop pop-2">handler.disable disables the event</div>
                     <div class="pop pop-1">handler.enable enables the event</div>
                 </div>
-<pre class="code">handler = surf.pop('Q', "#pop-1")
+<pre class="code">const handler = surf.pop('Q', "#pop-1")
 handler.disable()
 // event no longer occurs when "Q" is pressed
 handler.enable()
 // event is re-enabled</pre>
         </div>
+
+
+
+        <div class="sub-heading">Binding Multiple Keys</div>
+        <div class="flex-block">
+            <div class="element-container">
+                <div class="pop pop-1">You can trigger events only when a combination of keys are pressed</div>
+                <div class="pop pop-2">Use "+" to indicate a combination of keys</div>
+                <div id="combination-1" class="pop pop-1">Press "Ctrl+Q"</div>
+                <div id="combination-2" class="pop pop-2">Press "Ctrl+E"</div>
+            </div>
+<pre class="code">surf.highlight('Ctrl+Q', '#combination-1',
+    {toggle: true})
+surf.highlight('Ctrl+E', '#combination-2',
+    {toggle: true})</pre>
+    </div>
     </body>
     <!-- #library scripts -->
     <script src="js/keyHandler.js"></script>

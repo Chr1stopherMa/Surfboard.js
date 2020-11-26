@@ -9,6 +9,9 @@ const KEYDOWN = "keydown";
 const _key_map = {
     'Ctrl': 'ControlLeft',
     'Enter': 'Enter',
+    'Left': 'ArrowLeft',
+    'Right': 'ArrowRight',
+    '.': 'Period',
     '/': 'Slash'
 }
 
@@ -19,7 +22,7 @@ function KeyEventManager() {
 
     document.addEventListener(KEYDOWN, event => {
         keyTracker[event.code] = event.repeat;
-        console.log(keyTracker);
+        console.log(keyTracker)
     })
     
     document.addEventListener(KEYUP, event => {
@@ -90,12 +93,18 @@ function KeyEventManager() {
     function _parse_keys(keys) {
         keys = keys.split('+');
         const key_array = [];
+        let tmp = false; // TOOD: better way of handling this situation
         for (key of keys) {
             if (key in _key_map)
                 key_array.push({key: _key_map[key], hold: false})
+            else if (key === 'hold')
+                tmp = true;
             else
                 key_array.push({key: `Key${key}`, hold: false}) // TODO
         }
+        if (tmp)
+            delete key_array[0].hold; // TODO
+
         return key_array;
     }
 

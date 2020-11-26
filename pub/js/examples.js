@@ -15,7 +15,7 @@ surf.pop('U', '#pop-5', {toggle: true, delay: 0.5})
 surf.slide("Z", "#slide-1", {translateX: '-200%'})
 surf.slide("X", "#slide-2", {translateX: '-200%', delay: 0.5, toggle: true})
 surf.slide("C", "#slide-3", {translateY: '-220%'})
-surf.slide("V", "#slide-4", {translateX: '150%', translateY: '300%'})
+surf.slide("V", "#slide-4", {translateX: '300%', translateY: '300%'})
 
 // Highlight elements
 surf.highlight('I', "#highlight-1", {toggle: true});
@@ -31,10 +31,10 @@ surf.expand('H', '#img-5', {expand: 0.5, delay: 0.5});
 
 
 // Scrolling
-surf.scroll('W', {vertical: -0.08, relative: true, smooth: true});
-surf.scroll('S', {vertical: 0.08, relative: true, smooth: true});
+surf.scroll('W', {vertical: -0.08, relative: true, smooth: true, hold: true});
+surf.scroll('S', {vertical: 0.08, relative: true, smooth: true, hold: true});
 surf.scroll('J', {vertical: 0});
-surf.scroll('M', {target: '.sub-heading', offsetY: -20, smooth: true});
+surf.scroll('M', {target: '.heading', offsetY: -30, smooth: true});
 
 
 
@@ -42,13 +42,23 @@ surf.scroll('M', {target: '.sub-heading', offsetY: -20, smooth: true});
 surf.custom('R', () => window.location.reload());
 
 
-// Examples
+// More Examples
 // Nav bar
 surf.slide('N', '#nav-bar', {toggle: true, translateX: '100%', delay: 0.25})
 
 
+// Notifications
+let notifcation = document.getElementById("notif")
+function notify() {
+    notifcation.removeAttribute("style");
+    notifcation.style.visibility = 'initial';
+}
+surf.pop('X', '#notif')
+surf.custom('.', notify)
+
+
 // Quiz
-const handler = surf.highlight('B', '.choice');
+const handler = surf.highlight('Right', '.choice');
 function cb() {
     if (handler.selected().innerHTML.startsWith('c'))
         document.getElementById('answer').innerHTML = 'Correct! (<a href="https://en.wikipedia.org/wiki/Surfboard">See wikipedia</a>)'
@@ -57,3 +67,9 @@ function cb() {
 }
 
 surf.custom('Enter', cb);
+
+
+// Advanced Usage
+// combination of keys
+surf.highlight('Ctrl+Q', '#combination-1', {toggle: true})
+surf.highlight('Ctrl+E', '#combination-2', {toggle: true})
