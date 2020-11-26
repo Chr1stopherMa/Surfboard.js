@@ -1,0 +1,22 @@
+{
+  "name": "surfboard",
+  "version": "1.0.0",
+  "description": "Vanilla JS library for keyboard events",
+  "main": "Surfboard.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-fall-2020/js-library-machri14.git"
+  },
+  "author": "Christopher Ma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc309-fall-2020/js-library-machri14/issues"
+  },
+  "homepage": "https://github.com/csc309-fall-2020/js-library-machri14#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
