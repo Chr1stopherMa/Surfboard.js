@@ -9,18 +9,29 @@
     </head>
 
     <body>
+        <div id="nav-bar">
+            <h3>Press "N" to close this</h3>
+        </div>
+
         <h1>Surfboard.js</h1>
         <span id="quote">"Surf the web using your keyboard"</span>
 
         <div id="main-flex-container">
+            <div style="margin-bottom: 20px" class="heading">Getting Started</div>
+            <div class="flex-block">
+                <div class="element-container">
+                    <div class="pop pop-2">Create a global object that keeps track of keyboard events</div>
+                </div>
+                <pre class="code">const surf = Surfboard()</pre>
+            </div>
             <div class="heading">Basic Functions</div>
             <div class="sub-heading">Pop Elements</div>
             <div class="flex-block">
                 <div class="element-container">
-                    <div id="pop-1" class="pop pop-1">Pop this element (press "Q")</div>
-                    <div id="pop-2" class="pop pop-2">Pop with a transition (press "E")</div>
-                    <div id="pop-3" class="pop pop-1">Pop and collaspe space (press "T")</div>
-                    <div id="pop-4" class="pop pop-2">Toggle between Pop and Unpop (press "Y" multiple times)</div>
+                    <div id="pop-1" class="pop pop-1">Press "Q" to pop this element</div>
+                    <div id="pop-2" class="pop pop-2">Press "E" to pop with a transition</div>
+                    <div id="pop-3" class="pop pop-1">Press "T" to pop and collapse the space</div>
+                    <div id="pop-4" class="pop pop-2">Press "Y" multiple times to toggle</div>
                     <div id="pop-5" class="pop pop-1">Combine multiple options (press "U" multiple times)</div>
                 </div>
 <pre class="code">surf.pop('Q', "#pop-1")
@@ -34,13 +45,33 @@ surf.pop('U', '#pop-5', {toggle: true, delay: 0.5})</pre>
             <div class="sub-heading">Slide Elements</div>
             <div class="flex-block">
                 <div class="element-container">
-                    <div id="slide-1" class="pop pop-1">Hold "Z" to slide this to the left</div>
+                    <div id="slide-1" class="pop pop-1">Press "Z" to slide this to the left</div>
+                    <div id="slide-2" class="pop pop-2">Press "X" mulitple times to toggle</div>
+                    <div id="slide-3" class="pop pop-1">Press "C" to slide this up</div>
+                    <div id="slide-4" class="pop pop-2">Press "V" to slide down and to the right</div>
                 </div>
-<pre class="code">surf.pop('Q', "#pop-1")
-surf.pop('E', "#pop-2", {delay: 1})
-surf.pop('T', "#pop-3", {collapse: true})
-surf.pop('Y', "#pop-4", {toggle: true})
-surf.pop('U', '#pop-5', {toggle: true, delay: 0.5})</pre>
+<pre class="code">surf.slide("Z", "#slide-1", {translateX: '-200%'})
+surf.slide("X", "#slide-2", {translateX: '-200%',
+    delay: 0.5, toggle: true})
+surf.slide("C", "#slide-3", {translateY: '-220%'})
+surf.slide("V", "#slide-4", {translateX: '150%',
+    translateY: '300%'})</pre>
+            </div>
+
+
+            <div class="sub-heading">Highlighting Elements</div>
+            <div class="flex-block">
+                <div class="element-container">
+                    <div id="highlight-1" class="pop pop-1">Press "I" to highlight this element</div>
+                    <div id="highlight-2" class="pop pop-2">Hold "O" to highlight this element white</div>
+                    <div class="pop pop-1 highlight">Press "P" multiple times</div>
+                    <div class="pop pop-2 highlight">to cycle through</div>
+                    <div class="pop pop-1 highlight">these 3 elements</div>
+                </div>
+<pre class="code">surf.highlight('I', "#highlight-1", {toggle: true})
+surf.highlight('O', "#highlight-2", {colour: "#EEEEEE"})
+surf.highlight('P', ".highlight")
+</pre>
             </div>
 
 
@@ -74,19 +105,87 @@ surf.expand('H', '#img-5', {expand: 0.5, delay: 0.5})
                     <div class="pop pop-2">Hold "S" to scroll down the page</div>
                     <div class="pop pop-1">Try comparing the result to using the arrow keys!</div>
                     <div class="pop pop-2">Press "J" to instantly go to the top of the page</div>
+                    <div class="pop pop-1">Press "M" multiple times to cycle through all the sub-headings</div>
                 </div>
 <pre class="code">surf.scroll('W', {vertical: -0.08, relative: true,
     smooth: true})
 surf.scroll('S', {vertical: 0.08, relative: true,
     smooth: true})
 surf.scroll('J', {vertical: 0})
+surf.scroll('M', {target: '.sub-heading',
+    offsetY: -20})
 </pre>
             </div>
 
+            <div class="sub-heading">Custom Events</div>
+            <div class="flex-block">
+                <div class="element-container">
+                    <div class="pop pop-1">Not satisfied with the options above?</div>
+                    <div class="pop pop-2">Pass in your own callback function to be called</div>
+                    <div class="pop pop-1">Pressing "R" will refresh the page, un-doing some of the actions from this demo</div>
+                </div>
+<pre class="code">let callback = () => window.location.reload()
+surf.custom('R', callback)
+</pre>
+            </div>
+
+            <div class="heading">More Examples</div>
+            <div class="sub-heading">Toggle the Navigation Bar</div>
+            <div class="flex-block">
+                <div class="element-container">
+                    <div class="pop pop-2">Press "N" to toggle the nav bar</div>
+                </div>
+<pre class="code">surf.slide('N', '#nav-bar', {toggle: true,
+    translateX: '100%', delay: 0.25})</pre>
+        </div>
+
+
+        <div class="sub-heading">Multiple Choice Question</div>
+        <div class="flex-block">
+            <div class="element-container">
+                <div class="pop pop-1">
+                    Approximately how many surfboards are manufactured per year?
+                </div>
+                <div class="pop pop-2">(Press "B" to cycle through the options and "Enter" to confirm)</div>
+                <div class="pop pop-1 choice">a) 70,000</div>
+                <div class="pop pop-2 choice">b) 100,000</div>
+                <div class="pop pop-1 choice">c) 400,000</div>
+                <div class="pop pop-2 choice">d) 700,000</div>
+                <div id="answer" class="pop pop-1">...</div>
+            </div>
+<pre class="code">const handler = surf.highlight('B', '.choice')
+function cb() {
+    let selected = handler.selected()
+    let answer = element.getElementById('answer')
+
+    // no cheating
+    if (selected.innerHTML.startsWith('#'))
+        answer.innerHTML = 'Correct!'
+    else answer.innerHTML = 'Try again!'
+    }
+    
+surf.custom('Enter', cb);</pre>
+    </div>
+
+
+            <div class="heading">Advanced Usage</div>
+            <div class="sub-heading">Turning off Events</div>
+            <div class="flex-block">
+                <div class="element-container">
+                    <div class="pop pop-1">All functions return a handler that contains two methods</div>
+                    <div class="pop pop-2">handler.disable disables the event</div>
+                    <div class="pop pop-1">handler.enable enables the event</div>
+                </div>
+<pre class="code">handler = surf.pop('Q', "#pop-1")
+handler.disable()
+// event no longer occurs when "Q" is pressed
+handler.enable()
+// event is re-enabled</pre>
         </div>
     </body>
 
     <script src="keyHandler.js"></script>
+    <script src="animations.js"></script>
     <script src="Surfboard.js"></script>
     <script src="examples.js"></script>
 </html>

@@ -6,6 +6,11 @@
 const KEYUP = "keyup";
 const KEYDOWN = "keydown";
 
+const _key_map = {
+    'Enter': 'Enter',
+    '/': 'Slash'
+}
+
 function KeyEventManager() {
 
     // Object to keep track of keys pressed
@@ -13,6 +18,7 @@ function KeyEventManager() {
 
     document.addEventListener(KEYDOWN, event => {
         keyTracker[event.code] = event.repeat;
+        console.log(keyTracker);
     })
     
     document.addEventListener(KEYUP, event => {
@@ -79,9 +85,24 @@ function KeyEventManager() {
             state ? cb1() : cb2();
     }
 
+    // Converts key string into array of keycodes
+    function _parse_keys(keys) {
+        keys = keys.split('+');
+        const key_array = [];
+        for (key of keys) {
+            if (key in _key_map)
+                key_array.push({key: _key_map[key], hold: false})
+            else
+                key_array.push({key: `Key${key}`, hold: false}) // TODO
+        }
+        return key_array;
+    }
+
     function addEvent(keys, active_callback, inactive_callback) {
+        const key_arr = _parse_keys(keys);
         const callback = _make_callback(active_callback, inactive_callback);
-        new KeyEvent(keys, callback);
+        const event = new KeyEvent(key_arr, callback);
+        return {enable: event.addKeyEventListener, disable: event.removeKeyEventListener}
     }
 
     return {addEvent: addEvent};

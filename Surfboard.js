@@ -10,6 +10,8 @@ function Surfboard() {
     function _get_element(element) {
         if (typeof element === 'string' && element.startsWith('#')) {
             return document.getElementById(element.substring(1));
+        } else if (typeof element === 'string' && element.startsWith('.')) {
+            return document.getElementsByClassName(element.substring(1));
         }
         return element;
     }
@@ -85,10 +87,9 @@ function Surfboard() {
         }
 
         if ('toggle' in options && options.toggle) {
-            keys.map((key) => key.hold = false);
-            setTimeout(() => _manager.addEvent(keys, _make_toggle(active, unactive)), 400);
+            return _manager.addEvent(keys, _make_toggle(active, unactive));
         } else
-            setTimeout(() =>_manager.addEvent(keys, active, unactive), 400);
+            return _manager.addEvent(keys, active, unactive);
     }
 
 
@@ -135,10 +136,81 @@ function Surfboard() {
        }
 
        if ('toggle' in options && options.toggle) {
-           keys.map((key) => key.hold = false);
-           _manager.addEvent(keys, _make_toggle(active, inactive));
+           return _manager.addEvent(keys, _make_toggle(active, inactive));
        } else
-           _manager.addEvent(keys, active);
+           return _manager.addEvent(keys, active);
+    }
+
+
+    function highlight(keys, element, options) {
+        /* Visually highlights the element.
+         *
+         * If element refers to a html tag or class name, the elements
+         * will take turns being highlighted when the event is triggered.
+         * 
+         * In addition to the two handler functions normally returned,
+         * there will also be a "selected" function. If element is a single
+         * element, this returns true or false depending on whether it
+         * is highlighted. Otherwise, it will return the current highlighted
+         * element itself.
+         * 
+         * Options:
+         *      colour: The colour of the highlight. Can take any valid
+         *          CSS string.
+         *      width: The width of the highlight. Can take any valid
+         *          CSS string.
+         */
+
+        options = options ? options : {};
+        element = _get_element(element);
+
+        const width = options.width ? options.width: '3px';
+        const colour = options.colour ? options.colour : '#FFFF00';
+        let active, inactive, handler, selected;
+
+        if (element.length) { // TODO: Is this a safe check?
+            element = [...element];
+            const _default = [];
+            element.map((e) => _default.push(e.style.outline));
+            let current = 0;
+            active = function() {
+                current = current + 1 != element.length ? current + 1 : 0;
+                element.map((e, i) => {
+                    if (i == current)
+                        e.style.outline = `${width} solid ${colour}`;
+                    else
+                        e.style.outline = _default[i];
+                })
+            }
+
+            // Highlight the first element
+            element[0].style.outline = `${width} solid ${colour}`;
+
+            selected = () => {return element[current]}
+            handler = _manager.addEvent(keys, active);
+
+        } else {
+            const _default = element.style.outline;
+            let is_selected = false;
+            active = function() {
+                element.style.outline = `${width} solid ${colour}`;
+                is_selected = true;
+            }
+            inactive = function() {
+                element.style.outline = _default;
+                is_selected = false;
+            }
+            selected = () => {return is_selected};
+
+            if (options.toggle) {
+                handler = _manager.addEvent(keys, _make_toggle(active, inactive));
+            } else {
+                handler = _manager.addEvent(keys, active, inactive);
+            }
+        }
+
+        handler.selected = selected;
+        return handler;
     }
 
 
@@ -177,9 +249,9 @@ function Surfboard() {
         }
 
         if (options.toggle)
-            _manager.addEvent(keys, _make_toggle(active, inactive));
+            return _manager.addEvent(keys, _make_toggle(active, inactive));
         else
-            _manager.addEvent(keys, active, inactive);
+            return _manager.addEvent(keys, active, inactive);
     }
 
 
@@ -191,10 +263,13 @@ function Surfboard() {
          *          If this value is an integer, it represents the number
          *          of pixels. If this value is a float, it represents the
          *          percentage of the viewport.
+         *      offsetX: The horizontal offset.
+         *      offsetY: The vertical offset.
          *      relative: If true, viewport is scrolled relative to the 
          *          current position. Otherwise, the viewport is scrolled
          *          to the absolute position.
          *      smooth: If true, sets scroll-behavior of <html> tag to smooth.
+         *      target: An element or list of elements to scroll to. 
          *      vertical: The amount of vertical scroll; default is 0.
          *          If this value is an integer, it represents the number
          *          of pixels. If this value is a float, it represents the
@@ -202,33 +277,48 @@ function Surfboard() {
         */
 
         options = options ? options : {};
+        const offsetX = options.offsetX ? options.offsetX : 0;
+        const offsetY = options.offsetY ? options.offsetY : 0;
+        let active;
 
-        let x_scroll, y_scroll;
-        options.horizontal = options.horizontal ? options.horizontal : 0;
-        options.vertical = options.vertical ? options.vertical : 0;
+        if (options.target) {
+            const elements = _get_element(options.target);
+            let count = 0;
+            active = () => {
+                let rect = elements[count].getBoundingClientRect();
+                window.scrollTo({
+                    top: rect.top + window.scrollY + offsetY,
+                    left: rect.left + window.scrollX + offsetX,
+                    behavior: options.smooth ? 'smooth' : 'auto'
+                })
+                count = count + 1 < elements.length ? count + 1 : 0;
+            }
+        } else {
+            let x_scroll, y_scroll;
+            options.horizontal = options.horizontal ? options.horizontal : 0;
+            options.vertical = options.vertical ? options.vertical : 0;
 
-        if (Number.isInteger(options.horizontal))
-            x_scroll = function() {return options.horizontal};
-        else
-            x_scroll = function() {return options.horizontal * window.innerWidth};
-        
-        if (Number.isInteger(options.vertical))
-            y_scroll = function() {return options.vertical}
-        else
-            y_scroll = function() {return options.vertical * window.innerHeight};
-
-        function active() {
-            if (options.smooth)
-                document.documentElement.style.scrollBehavior = 'smooth';
-            if (options.relative)
-                scrollBy(x_scroll(), y_scroll());
+            if (Number.isInteger(options.horizontal))
+                x_scroll = function() {return options.horizontal};
             else
-                scrollTo(x_scroll(), y_scroll());
-            if (options.smooth)
-                document.documentElement.style.scrollBehavior = 'initial';
+                x_scroll = function() {return options.horizontal * window.innerWidth};
+            
+            if (Number.isInteger(options.vertical))
+                y_scroll = function() {return options.vertical}
+            else
+                y_scroll = function() {return options.vertical * window.innerHeight};
+
+            active = () => {
+                const settings = {
+                    top: y_scroll() + offsetY,
+                    left: x_scroll() + offsetX,
+                    behavior: options.smooth ? 'smooth': 'auto'
+                }
+                 options.relative ? scrollBy(settings) : scrollTo(settings);
+            }
         }
 
-        _manager.addEvent(keys, active);
+        return _manager.addEvent(keys, active);
     }
 
 
@@ -244,14 +334,15 @@ function Surfboard() {
        options = options ? options : {};
 
        if (options.toggle)
-           _manager.addEvent(keys, _make_toggle(callback, callback2));
+           return _manager.addEvent(keys, _make_toggle(callback, callback2));
         else
-           _manager.addEvent(keys, callback, callback2);
+           return _manager.addEvent(keys, callback, callback2);
     }
 
     return {
         expand: expand,
         pop: pop,
+        highlight: highlight,
         slide: slide,
         scroll: scroll,
         custom: custom
