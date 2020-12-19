@@ -19,9 +19,9 @@ surf.slide("C", "#slide-3", {translateY: '-220%'})
 surf.slide("V", "#slide-4", {translateX: '300%', translateY: '300%'})
 
 // Highlight elements
-surf.highlight('I', "#highlight-1", {toggle: true});
+surf.highlight('I', "#highlight-1", {toggle: true, colour: "yellow"});
 surf.highlight('O', "#highlight-2", {colour: "#EEEEEE"});
-surf.highlight('P', ".highlight");
+surf.highlight('P', ".highlight", {colour: "yellow"});
 
 // Expanding elements
 surf.expand('A', '#img-1', {expand: 2});
@@ -32,8 +32,8 @@ surf.expand('H', '#img-5', {expand: 0.5, delay: 0.5});
 
 
 // Scrolling
-surf.scroll('W', {vertical: -0.08, relative: true, smooth: true, hold: true});
-surf.scroll('S', {vertical: 0.08, relative: true, smooth: true, hold: true});
+surf.scroll('hold+W', {vertical: -0.08, relative: true, smooth: true, hold: true});
+surf.scroll('hold+S', {vertical: 0.08, relative: true, smooth: true, hold: true});
 surf.scroll('J', {vertical: 0});
 surf.scroll('M', {target: '.heading', offsetY: -30, smooth: true});
 

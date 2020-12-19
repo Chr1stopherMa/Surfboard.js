@@ -3,6 +3,8 @@
  * and the callback response.
 */
 
+(function(global, document) {
+
 const KEYUP = "keyup";
 const KEYDOWN = "keydown";
 
@@ -657,3 +659,8 @@ function Surfboard() {
         custom: custom
     }
 }
+
+// Add to global scope
+global.Surfboard = Surfboard;
+
+}) (window, window.document);
