@@ -1,0 +1,150 @@
+/* Prevent horizontal scrolling */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #007C77;
+    color: #F0F6F6;
+    text-align:center;
+}
+
+h1 {
+    font-size: 6em;
+}
+
+.heading {
+    font-size: 2.5em;
+    font-weight: bold;
+
+    margin-top: 30px;
+    margin-left: 5%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.sub-heading {
+    font-size: 1.5em;
+    font-weight: bold;
+
+    margin-left: 10%;
+    margin-top: 30px;
+    text-align: left;
+}
+
+#back-key {
+    position: fixed;
+    left: 1%;
+    top: 2%;
+    width: 70px;
+    padding-top: 0;
+    opacity: 0.8;
+}
+
+.copy {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.key {
+    display: inline-block;
+    height: 1.3em;
+    vertical-align: text-bottom;
+}
+
+.cdn-script {
+    text-align: center;
+    border: 3px dashed rgba(0,27,46,0.5);
+    font-size: 1.5em;
+    width: fit-content;
+    align-self: center;
+    padding: 3px;
+    margin: auto;
+}
+
+#copy {
+    opacity: 0;
+    transition: opacity 1s;
+    font-size: 2em;
+}
+
+.code {
+    text-align: left;
+    border: 1px solid #111111;
+    padding: 10px;
+    width: 90%;
+    margin: auto;
+}
+
+.main-block {
+    background-color: rgba(0,27,46,0.5);
+    margin-left: 5%;
+    width: 85%;
+    text-align: left;
+    padding: 10px;
+    font-size: 1.3em;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+span {
+    line-height: 130%;
+}
+
+td {
+    padding: 4px;
+}
+
+.key-codes {
+    width: 60%;
+    font-size: 1.5em;
+    margin: auto;
+    margin-top: 20px;
+    background-color: rgba(0,27,46,0.5);
+
+}
+
+.key-strings {
+    border: 3px solid rgba(0,27,46,0.5);
+}
+
+.key-strings tr:nth-child(even){
+    background-color:#007C77;
+}
+
+.method-block {
+    margin-left: 10%;
+    width: 85%;
+}
+
+.method-grid {
+    display: grid;
+    grid-template-columns: 20% 20% 60%;
+    padding: 10px;
+}
+
+.method-heading {
+    font-size: 1.5em;
+}
+
+.argument, .type, .description {
+    padding: 10px;
+}
+
+.option {
+    margin-top: 0.5em;
+    font-weight: 700;
+}
+
+.option-description {
+    margin-left: 2em;
+}
+
+a {
+    color: slategray;
+}

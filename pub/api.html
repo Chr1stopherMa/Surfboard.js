@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Surfboard</title>
+        <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/proxy/RNrqueRSmtL4Dd3iovUaS9PhXHT_vpMwiKsYxBFQo-ZIrJuIBPlc85Ju1AQF-F11fQxWFkEEP-mbfNq1hTT--o_fWZWVt1AK5fgsQLyNDE7t"/>
+        <link rel="stylesheet" href="styles/api.css">
+    </head>
+
+    <body>
+
+        <img id="back-key" src="res/b.png">
+        <h1>Surfboard.js API</h1>
+
+        <div class="copy">Press <img class="key" src="res/c.png"> to copy the script tag</div>
+        <pre class="cdn-script">&lt;script src="http://surfboard-js.herokuapp.com/js/Surfboard.js"&gt;&lt;/script&gt;</pre>
+        <p id="copy">Copied!</p>
+        <textarea id="cdn" style="opacity:0;height: 0;">&lt;script src="http://surfboard-js.herokuapp.com/js/Surfboard.js"&gt;&lt;/script&gt;</textarea>
+
+        <div class="heading">Getting Started</div>
+        
+        <div class="main-block grid-container">
+            <div>Include the script tag above in the HTML file. You can instantiate a global Surfboard object
+            by calling the Surfboard function. All methods below are properties of this object.</div>
+            <pre class="code">const surf = Surboard()
+// go back when "B" is pressed
+surf.redirect("B", "index.html")</pre>
+        </div>
+            
+        </div>
+        <div class="heading">Surfboard methods</div>
+        <div class="sub-heading">pop(keys, element, options)</div>
+        <div class="main-block method-block">
+            <div>Pops (removes) the element from the screen.
+            </div>
+            <div class="method-grid">
+                <div class="method-heading">Argument</div>
+                <div class="method-heading">Type</div>
+                <div class="method-heading">Description</div>
+
+                <div class="argument">keys</div>
+                <div class="type">String</div>
+                <div class="description">The combination of keys to be pressed (<a href="#string-format">see below</a>).</div>
+
+                <div class="argument">element</div>
+                <div class="type">String or HTMLCanvasElement</div>
+                <div class="description">The id of an element or the element itself.</div>
+
+                <div class="argument">options (optional)</div>
+                <div class="type">Object</div>
+                <div class="description">Customize the event options. 
+                    <div class="options">
+                        <div class="option">collapse:</div>
+                        <span class="option-description">if true, collapse the space when the element is popped; false by default</span>
+                        <div class="option">delay:</div>
+                        <span class="option-description">the transition time, in seconds, until the element fades out; 0 by default</span>
+                        <div class="option">toggle:</div>
+                        <span class="option-description">if true, the key event can be triggered multiple times to make the element disappear/re-appear; false by default</span>
+                        <div class="option">transition:</div>
+                        <span class="option-description">the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function">
+                            transition timing function</a>; "linear" by default</span>
+                    </div>
+                </div>
+            </div>
+            <div class="method-heading">Returns</div>
+            <div class="argument">An object containing an enable and disable method (<a href="#return">see below</a>)</div>
+        </div>
+
+
+
+        <div class="sub-heading">highlight(keys, element, options)</div>
+        <div class="main-block method-block">
+            <div>Visually highlights the element(s) by adding a border. <br><br>If multiple elements are specified,
+                pressing the key multiple times will cause the highlighting to cycle through the elements. This can be
+                used to let the user choose from a list of options (see return value).
+            </div>
+            <div class="method-grid">
+                <div class="method-heading">Argument</div>
+                <div class="method-heading">Type</div>
+                <div class="method-heading">Description</div>
+
+                <div class="argument">keys</div>
+                <div class="type">String</div>
+                <div class="description">The combination of keys to be pressed (<a href="#string-format">see below</a>).</div>
+
+                <div class="argument">element</div>
+                <div class="type">String or HTMLCanvasElement or Array of HTMLCanvasElement</div>
+                <div class="description">The id of an element, class of the element(s) or the element(s) itself.</div>
+
+                <div class="argument">options (optional)</div>
+                <div class="type">Object</div>
+                <div class="description">Customize the event options. 
+                    <div class="options">
+                        <div class="option">colour:</div>
+                        <span class="option-description">the colour of the highlight; no colour by default</span>
+                        <div class="option">reverse:</div>
+                        <span class="option-description">the key to be pressed to highlight the previous element; no key
+                            specified by default. This only has an effect if there are multiple elements
+                        </span>
+                        <div class="option">width:</div>
+                        <span class="option-description">the width of the highlighting border; "3px" by default</span>
+                    </div>
+                </div>
+            </div>
+            <div class="method-heading">Returns</div>
+            <div class="argument">An object containing an enable and disable method (<a href="#return">see below</a>)
+                <br><br>
+                In addition, if the element argument was a class name or array of HTMLCanvasElement, the object also
+                contains a selected() method which returns the HTMLCanvasElement that is currently highlighted.
+            </div>
+        </div>
+
+
+
+        <div class="sub-heading">expand(keys, element, options)</div>
+        <div class="main-block method-block">
+            <div>Expands the element by a specified factor.
+            </div>
+            <div class="method-grid">
+                <div class="method-heading">Argument</div>
+                <div class="method-heading">Type</div>
+                <div class="method-heading">Description</div>
+
+                <div class="argument">keys</div>
+                <div class="type">String</div>
+                <div class="description">The combination of keys to be pressed (<a href="#string-format">see below</a>).</div>
+
+                <div class="argument">element</div>
+                <div class="type">String or HTMLCanvasElement</div>
+                <div class="description">The id of an element or the element itself.</div>
+
+                <div class="argument">options (optional)</div>
+                <div class="type">Object</div>
+                <div class="description">Customize the event options. 
+                    <div class="options">
+                        <div class="option">delay:</div>
+                        <span class="option-description">the time it takes for the image to expand in seconds; 1 by default</span>
+                        <div class="option">expand:</div>
+                        <span class="option-description">the horizontal and vertical scaling factor; 1 by default
+                        </span>
+                        <div class="option">expandX:</div>
+                        <span class="option-description">the horizontal scaling factor; 1 by default. Overrides the value
+                            in "expand" if specified.
+                        </span>
+                        <div class="option">expandX:</div>
+                        <span class="option-description">the vertical scaling factor; 1 by default. Overrides the value
+                            in "expand" if specified.
+                        </span>
+                        <div class="option">toggle:</div>
+                        <span class="option-description">if true, pressing the keys will toggle the element between its expanded and original sizes; otherwise,
+                            the element will return to its original size when the key event is finished; false by default.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="method-heading">Returns</div>
+            <div class="argument">An object containing an enable and disable method (<a href="#return">see below</a>)
+            </div>
+        </div>
+
+
+        <div class="sub-heading">slide(keys, element, options)</div>
+        <div class="main-block method-block">
+            <div>Translates the element by the specified distance.
+            </div>
+            <div class="method-grid">
+                <div class="method-heading">Argument</div>
+                <div class="method-heading">Type</div>
+                <div class="method-heading">Description</div>
+
+                <div class="argument">keys</div>
+                <div class="type">String</div>
+                <div class="description">The combination of keys to be pressed (<a href="#string-format">see below</a>).</div>
+
+                <div class="argument">element</div>
+                <div class="type">String or HTMLCanvasElement</div>
+                <div class="description">The id of an element or the element itself.</div>
+
+                <div class="argument">options (optional)</div>
+                <div class="type">Object</div>
+                <div class="description">Customize the event options. 
+                    <div class="options">
+                        <div class="option">delay:</div>
+                        <span class="option-description">the time it takes for the image to expand in seconds; 1 by default</span>
+                        <div class="option">toggle:</div>
+                        <span class="option-description">if true, pressing the keys multiple times will cause the element to switch
+                            between its original and slided positions. Otherwise, the element will stay at its slided position once
+                            the event is triggered; false by default
+                        </span>
+                        <div class="option">translateX:</div>
+                        <span class="option-description">the amount in pixels to horizontally translate the element; 0 by default
+                        </span>
+                        <div class="option">translateY:</div>
+                        <span class="option-description">the amount in pixels to vertically translate the element; 0 by default
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="method-heading">Returns</div>
+            <div class="argument">An object containing an enable and disable method (<a href="#return">see below</a>)
+            </div>
+        </div>
+
+
+        <div class="sub-heading">scroll(keys, options)</div>
+        <div class="main-block method-block">
+            <div>Moves the viewport to a specified location.
+            </div>
+            <div class="method-grid">
+                <div class="method-heading">Argument</div>
+                <div class="method-heading">Type</div>
+                <div class="method-heading">Description</div>
+
+                <div class="argument">keys</div>
+                <div class="type">String</div>
+                <div class="description">The combination of keys to be pressed (<a href="#string-format">see below</a>).</div>
+
+                <div class="argument">options (optional)</div>
+                <div class="type">Object</div>
+                <div class="description">Customize the event options. 
+                    <div class="options">
+                        <div class="option">horizontal:</div>
+                        <span class="option-description">the amount of horizontal scrolling. If it is an integer, it represents the
+                            number of pixels. If it is a floating point number, it represents a percentage of the viewport width;
+                            0 by default
+                        </span>
+                        <div class="option">offsetX:</div>
+                        <span class="option-description">the horizontal offset in pixels. Negative values represent an offset 
+                            towards the left; 0 by default
+                        </span>
+                        <div class="option">offsetY:</div>
+                        <span class="option-description">the vertical offset in pxiels. Negative values represent an offset towards
+                            the top of the screen; 0 by default
+                        </span>
+                        <div class="option">relative:</div>
+                        <span class="option-description">if true, the scrolling occurs relative to the current position of the
+                            viewport; false by default
+                        </span>
+                        <div class="option">reverse:</div>
+                        <span class="option-description">if "target" is defined, this represents the key pressed to scroll 
+                            in the reverse direction; no key specified by default
+                        </span>
+                        <div class="option">smooth:</div>
+                        <span class="option-description">if true, sets the scroll-behavior to smooth; false by default.
+                        </span>
+                        <div class="option">target:</div>
+                        <span class="option-description">the id or classname of an element(s) or the element(s) itself. For a 
+                            single element, this will cause the screen to move to the top-left corner of the element. For multiple 
+                            elements, triggering the key event multiple times will cause the screen to move through the elements
+                        </span>
+                        <div class="option">vertical:</div>
+                        <span class="option-description">the amount of vertical scrolling. If it is an integer, it represents the
+                            number of pixels. If it is a floating point number, it represents a percentage of the viewport width;
+                            0 by default.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="method-heading">Returns</div>
+            <div class="argument">An object containing an enable and disable method (<a href="#return">see below</a>)
+            </div>
+        </div>
+
+
+        <div class="sub-heading">redirect(keys, link, callback)</div>
+        <div class="main-block method-block">
+            <div>Redirects the user to the specified link.
+            </div>
+            <div class="method-grid">
+                <div class="method-heading">Argument</div>
+                <div class="method-heading">Type</div>
+                <div class="method-heading">Description</div>
+
+                <div class="argument">keys</div>
+                <div class="type">String</div>
+                <div class="description">The combination of keys to be pressed (<a href="#string-format">see below</a>).</div>
+
+                <div class="argument">link</div>
+                <div class="type">String</div>
+                <div class="description">The URL path. Can be relative or absolute.</div>
+
+                <div class="argument">callback (optional)</div>
+                <div class="type">Function</div>
+                <div class="description">A function to be called before the redirection occurs (allows for 
+                    any "clean-up" required). 
+                </div>
+
+                <div class="argument">toggle (optional)</div>
+                <div class="type">Boolean</div>
+                <div class="description">If true, callback/callback2 will alternate whenever the key event occurs. Otherwise,
+                    callback2 will be called whenever the key event finishes; false by default
+                </div>
+            </div>
+            <div class="method-heading">Returns</div>
+            <div class="argument">An object containing an enable and disable method (<a href="#return">see below</a>)
+            </div>
+        </div>
+
+
+        <div class="sub-heading">custom(keys, callback, callback2, toggle)</div>
+        <div class="main-block method-block">
+            <div>Triggers a user-defined event.
+            </div>
+            <div class="method-grid">
+                <div class="method-heading">Argument</div>
+                <div class="method-heading">Type</div>
+                <div class="method-heading">Description</div>
+
+                <div class="argument">keys</div>
+                <div class="type">String</div>
+                <div class="description">The combination of keys to be pressed (<a href="#string-format">see below</a>).</div>
+
+                <div class="argument">callback</div>
+                <div class="type">Function</div>
+                <div class="description">The callback function to be called.</div>
+
+                <div class="argument">callback2 (optional)</div>
+                <div class="type">Function</div>
+                <div class="description">A second callback function. It's timing depends on the toggle argument below; an
+                    empty function by default
+                </div>
+
+                <div class="argument">toggle (optional)</div>
+                <div class="type">Boolean</div>
+                <div class="description">If true, callback/callback2 will alternate whenever the key event occurs. Otherwise,
+                    callback2 will be called whenever the key event finishes; false by default
+                </div>
+            </div>
+            <div class="method-heading">Returns</div>
+            <div class="argument">An object containing an enable and disable method (<a href="#return">see below</a>)
+            </div>
+        </div>
+
+        <div id="string-format" class="heading">Key String Format</div>
+        <div class="main-block grid-container">
+            <span>
+                All methods take a string representing the key(s) to be pressed as their first parameter.
+                The string should be a sequence of one or more keys separated by "+". <br/> <br/>
+
+                Note that order does not matter. For example, "Ctrl+J" is the same event as "J+Ctrl". <br/> <br/>
+
+                For methods that differentiate between pressing and holding, prefix the string with "hold+" to
+                specify that the keys need to be held. <br/> <br/>
+
+                See below for a comprehensive list of all the keys supported.
+            </span>
+            <table class="key-strings">
+                <tr>
+                    <th>Event</th>
+                    <th>String</th>
+                </tr>
+                <tr>
+                    <td>When A is pressed</td>
+                    <td>"A"</td>
+                </tr>
+                <tr>
+                    <td>When A and B are pressed</td>
+                    <td>"A+B"</td>
+                </tr>
+                <tr>
+                    <td>When the Space bar is pressed</td>
+                    <td>"Space"</td>
+                </tr>
+                <tr>
+                    <td>When Control and C are pressed</td>
+                    <td>"Ctrl+C"</td>
+                </tr>
+                <tr>
+                    <td>When 1 and the Right arrow key are pressed</td>
+                    <td>"Right+1"</td>
+                </tr>
+                <tr>
+                    <td>When K is being held</td>
+                    <td>"hold+K"</td>
+                </tr>
+                <tr>
+                    <td>When M and N are being held</td>
+                    <td>"hold+M+N"</td>
+                </tr>
+              </table>
+        </div>
+
+        <table class="key-strings key-codes">
+            <tr>
+                <th>Key</th>
+                <th>String Code</th>
+            </tr>
+            <tr>
+                <td>Alphanumeric</td>
+                <td>"A-Z0-9"</td>
+            </tr>
+            <tr>
+                <td>Left Control</td>
+                <td>"Ctrl"</td>
+            </tr>
+            <tr>
+                <td>Right Control</td>
+                <td>"RCtrl"</td>
+            </tr>
+            <tr>
+                <td>Left Shift</td>
+                <td>"Shift"</td>
+            </tr>
+            <tr>
+                <td>Right Shift</td>
+                <td>"RShift"</td>
+            </tr>
+            <tr>
+                <td>Enter</td>
+                <td>"Enter"</td>
+            </tr>
+            <tr>
+                <td>Space Bar</td>
+                <td>"Space"</td>
+            </tr>
+            <tr>
+                <td>Left Arrow Key</td>
+                <td>"Left"</td>
+            </tr>
+            <tr>
+                <td>Right Arrow Key</td>
+                <td>"Right"</td>
+            </tr>
+            <tr>
+                <td>Up Arrow Key</td>
+                <td>"Up"</td>
+            </tr>
+            <tr>
+                <td>Down Arrow Key</td>
+                <td>"Down"</td>
+            </tr>
+            <tr>
+                <td>Period</td>
+                <td>"."</td>
+            </tr>
+            <tr>
+                <td>Comma</td>
+                <td>","</td>
+            </tr>
+            <tr>
+                <td>Forward Slash</td>
+                <td>"/"</td>
+            </tr>
+            <tr>
+                <td>Equal</td>
+                <td>"="</td>
+            </tr>
+            <tr>
+                <td>Minus</td>
+                <td>"-"</td>
+            </tr>
+            <tr>
+                <td>Left Bracket</td>
+                <td>"["</td>
+            </tr>
+            <tr>
+                <td>Right Bracket</td>
+                <td>"]"</td>
+            </tr>
+          </table>
+
+        <div id="return" class="heading">Return Value</div>
+        <div class="main-block grid-container" style="margin-bottom: 15%;">
+            <span>
+                All methods return an object containing two functions: <br><br>
+            </span> <span></span>
+            <span>
+                <div class="method-heading">disable()</div>
+                Removes the key event listener associated with the function call that created this object.
+                This method has no effect if the event listener has
+                already been removed.
+            </span>
+            <span>
+                <div class="method-heading">enable()</div>
+                Adds the key event listener associated with the function called that created this object.
+                This method has no effect if the event listener is already being listened for.
+            </span>
+        </div>
+    </body>
+
+        <!-- #library scripts -->
+        <script src="js/Surfboard.js"></script>
+    
+        <!-- script using the library -->
+        <script src="js/examples/api.js"></script>
+
+</html>

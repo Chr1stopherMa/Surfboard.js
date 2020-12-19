@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Example 1</title>
+        <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/proxy/RNrqueRSmtL4Dd3iovUaS9PhXHT_vpMwiKsYxBFQo-ZIrJuIBPlc85Ju1AQF-F11fQxWFkEEP-mbfNq1hTT--o_fWZWVt1AK5fgsQLyNDE7t"/>
+        <link rel="stylesheet" href="styles/example1.css">
+    </head>
+
+    <body>
+
+        <div id="example1-flex-container">
+
+            <span class="example1-slide">
+                <div class="example1-title">Making a Powerpoint with Surfboard</div>
+                <div class="example1-text">Press the Left and Right arrow keys to view the powerpoint</div>
+            </span>
+
+            <span class="example1-slide">
+                <div class="example1-heading">Step 1: Create the Slides</div>
+                <div class="example1-grid">
+                    <div class="example1-slide-text">
+                        Each slide is an element with a width and height of 100% (filling the viewport).
+                        These elements are placed beside each other, essentially making a very wide page.
+
+                        <br/><br/><br/>
+
+                        Using <a href="https://www.w3schools.com/css/css3_flexbox.asp">CSS Flexbox</a>
+                        with a horizontal flow will help place the slides properly.
+                    </div>
+                    <img class="example1-slide-img" src="./res/example1-1.gif">
+                </div>
+            </span>
+
+            <span class="example1-slide">
+                <div class="example1-heading">Step 2: Disable Scrolling</div>
+                <div class="example1-grid">
+                    <div class="example1-slide-text">
+                        Set the overflow-x and overflow-y properties to 0 to prevent horizontal and vertical
+                        scrolling respectively.
+                    </div>
+                    <img class="example1-slide-img" src="./res/example1-2.png">
+                </div>
+            </span>
+
+            <span class="example1-slide">
+                <div class="example1-heading">Step 3: Fill in the Slides</div>
+                <div class="example1-grid">
+                    <div class="example1-slide-text">
+                        Add content to your slides!
+
+                        <br/><br/>
+
+                        <a href="https://www.w3schools.com/css/css_grid.asp">CSS Grid</a> was used
+                        in this example to create a layout with 2 columns: One for the text and 
+                        another for the image.
+                    </div>
+                    <img class="example1-slide-img" src="./res/example1-3.png">
+                </div>
+            </span>
+
+            <span class="example1-slide">
+                <div class="example1-heading">Step 4: Add the Code</div>
+                <div class="example1-grid">
+                    <div class="example1-slide-text">
+                        Create the Surfboard object and call its scroll function.
+                        It's that simple!
+
+                        <br/><br/><br/>
+                        'Right': the key pressed to go forwards
+                        <br/><br/>
+                        target: refers to the class name of the slides
+                        <br/><br/>
+                        offsetX: ensures the slide doesn't touch the leftmost part
+                        of the viewport. Since the slides in this example have a margin 
+                        of 5% on all sides, we have a horizontal offset of -5%
+                        <br/><br/>
+                        reverse: the key pressed to go backwards
+                    </div>
+                    <img class="example1-slide-img" src="./res/example1-4.png">
+                </div>
+            </span>
+
+            <span class="example1-slide">
+                <div class="example1-heading">Thanks for Watching!</div>
+                    <div class="example1-slide-text">
+                        Click <a href="more-examples.html">here</a> to go back home
+                    </div>
+            </span>
+
+            <span id="example1-padding-end">
+            </span>
+        </div>
+
+    </body>
+
+    <!-- #library scripts -->
+    <script src="js/Surfboard.js"></script>
+
+    <!-- script using the library -->
+    <script src="js/examples/example1.js"></script>
+</html>

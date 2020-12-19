@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Example 3</title>
+        <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/proxy
+        /RNrqueRSmtL4Dd3iovUaS9PhXHT_vpMwiKsYxBFQo-ZIrJuIBPlc85Ju1AQF-F11fQxWFkEEP-mbfNq1hTT--o_fWZWVt1AK5fgsQLyNDE7t"/>
+        <link rel="stylesheet" href="styles/example3.css">
+    </head>
+
+    <body>
+        <div id="example3-grid">
+            <div id="example3-controls">
+                <h1>Controls</h1>
+                <div class="example3-instruction">Press <img src="./res/p.png"> to <span id="example3-p">Play</span></div>
+                <div class="example3-instruction">Press <img src="./res/f.png"> to Fullscreen</div>
+                <div class="example3-instruction">Hold <img src="./res/up.png"><img src="./res/down.png"> to adjust Volume</div>
+                <div class="example3-instruction">Hold <img src="./res/left.png"><img src="./res/right.png"> to Rewind and Fast-Forward</div>
+                <div class="example3-instruction">Press <img src="./res/h.png"> to return Home</div>
+            </div>
+
+            <video id="example3-video">
+                <source src="./res/example3.mov" type="video/mp4">
+            </video>
+
+            <div id="example3-volume"></div>
+            <img id="example3-volume-icon" src="./res/volume.png">
+            <div id="example3-time"></div>
+        </div>
+    </body>
+
+    <!-- #library scripts -->
+    <script src="js/Surfboard.js"></script>
+
+    <!-- script using the library -->
+    <script src="js/examples/example3.js"></script>
+</html>
