@@ -59,7 +59,7 @@ surf.custom('.', notify)
 
 
 // Quiz
-const handler = surf.highlight('Right', '.choice');
+const handler = surf.highlight('Right', '.choice', {colour: "yellow"});
 function cb() {
     if (handler.selected().innerHTML.startsWith('c'))
         document.getElementById('answer').innerHTML = 'Correct! (<a href="https://en.wikipedia.org/wiki/Surfboard">See wikipedia</a>)'

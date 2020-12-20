@@ -36,7 +36,6 @@ function KeyEventManager() {
 
     document.addEventListener(KEYDOWN, event => {
         keyTracker[event.code] = event.repeat;
-        console.log(keyTracker)
     })
     
     document.addEventListener(KEYUP, event => {
@@ -296,7 +295,6 @@ function Surfboard() {
         let height, width;
 
         function updateSize() {
-            console.log(domRect().width)
             height = domRect().height;
             width = domRect().width;
             element.style.height = `${height}px`;
@@ -440,7 +438,6 @@ function Surfboard() {
 
             selected = () => {return element[current]}
             handler = _manager.addEvent(keys, active);
-            console.log(handler.enable)
 
             if (options.reverse) {
                 reverse = function() {
